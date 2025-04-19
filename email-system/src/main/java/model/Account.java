@@ -1,22 +1,33 @@
 package model;
 
+import constant.AccountType;
+import interfaces.FilterSpamEmail;
+
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class Account {
+public abstract class Account implements FilterSpamEmail {
     private String accountId;
+    private final AccountType accountType;
+    private List<EmailModel> emailModels;
 
-    public boolean isVip(){
-        return false;
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 
-    public Account(String accountId) {
+    public List<EmailModel> getEmailModels() {
+        return emailModels;
+    }
+
+    public void setEmailModels(List<EmailModel> emailModels) {
+        this.emailModels = emailModels;
+    }
+
+    public Account(String accountId, AccountType accountType) {
         this.accountId = accountId;
+        this.accountType = accountType;
     }
 
-    public Account() {
-    }
 
     public String getAccountId() {
         return accountId;
@@ -26,7 +37,4 @@ public class Account {
         this.accountId = accountId;
     }
 
-    public List<EmailModel> filterSpam(List<EmailModel> emailModels){
-        return emailModels;
-    }
 }

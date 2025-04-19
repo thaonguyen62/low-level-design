@@ -1,7 +1,8 @@
 package model;
 
+import constant.AccountType;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -11,14 +12,13 @@ public class AccountVip extends Account {
 
     private static final List<String> patternSpam = Arrays.asList("spam", "promotion", "win");
 
-    @Override
-    public boolean isVip() {
-        return true;
+    public AccountVip(String accountId, AccountType accountType) {
+        super(accountId, accountType);
     }
 
     @Override
-    public List<EmailModel> filterSpam(List<EmailModel> emailModels) {
-        return emailModels.stream()
+    public List<EmailModel> filter() {
+        return this.getEmailModels().stream()
                 .filter(emailModel -> {
                     Pattern spamPattern = Pattern.compile(
                             String.join("|", patternSpam),
@@ -30,10 +30,5 @@ public class AccountVip extends Account {
                 .collect(Collectors.toList());
     }
 
-    public AccountVip(String accountId) {
-        super(accountId);
-    }
 
-    public AccountVip() {
-    }
 }
